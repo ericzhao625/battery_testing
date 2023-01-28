@@ -1,6 +1,6 @@
 """
-Module for testing PyVISA connection to a new instrument.
-Can be used for most interfaces (e.g. GPIB, RS232, USB, Ethernet)
+Script for testing PyVISA connection to a new instrument.
+Can be used for most interfaces (e.g. GPIB, RS232, USB, Ethernet).
 Use to test commands for developing drivers.
 Also serves as a basic template for using PyVISA with a device.
 """
