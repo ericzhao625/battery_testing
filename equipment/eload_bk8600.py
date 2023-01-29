@@ -5,7 +5,7 @@ Module driver for a BK PRECISION 86XX series E-load.
 from pyvisa.errors import InvalidSession
 
 import inst_pyvisa
-import eload_bk8600_consts as bk_8600_const
+import eload_bk8600_consts
 
 class Bk8600(inst_pyvisa.PyVisaInstrument):
     """
@@ -14,9 +14,9 @@ class Bk8600(inst_pyvisa.PyVisaInstrument):
     def __init__(self, visa_name: str) -> None:
         super().__init__(visa_name)
         # Set safety limits based on model number.
-        self.max_curr = bk_8600_const.MAX_SPECS[self.idn[1]][0]
-        self.max_volt = bk_8600_const.MAX_SPECS[self.idn[1]][1]
-        self.max_pow = bk_8600_const.MAX_SPECS[self.idn[1]][2]
+        self.max_curr = eload_bk8600_consts.MAX_SPECS[self.idn[1]][0]
+        self.max_volt = eload_bk8600_consts.MAX_SPECS[self.idn[1]][1]
+        self.max_pow = eload_bk8600_consts.MAX_SPECS[self.idn[1]][2]
 
         # Reset to default settings of E-load (constant current).
         self.inst.write("*RST")
