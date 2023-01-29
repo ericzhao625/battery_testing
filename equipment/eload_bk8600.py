@@ -10,13 +10,27 @@ import eload_bk8600_consts
 class Bk8600(inst_pyvisa.PyVisaInstrument):
     """
     Class to represent a BK Precision 86XX series E-load.
+
+    Args:
+        visa_name (str): VISA resource name of the instrument.
+
+    Attributes:
+        inst: PyVISA resource instance.
+        manufacturer: Manufacturer name of instrument.
+        model_number: Model number of instrument.
+        serial_number: Serial number of instrument.
+        firmware_level: Firmware level of instrument.
+        max_curr: Maximum current rating of instrument.
+        max_volt: Maximum voltage rating of instrument.
+        max_pow: Maximum power rating of instrument.
+        mode: Operation mode (CC, CR, CV, CW) of instrument.
     """
     def __init__(self, visa_name: str) -> None:
         super().__init__(visa_name)
         # Set safety limits based on model number.
-        self.max_curr = eload_bk8600_consts.MAX_SPECS[self.idn[1]][0]
-        self.max_volt = eload_bk8600_consts.MAX_SPECS[self.idn[1]][1]
-        self.max_pow = eload_bk8600_consts.MAX_SPECS[self.idn[1]][2]
+        self.max_curr = eload_bk8600_consts.MAX_SPECS[self.model_number][0]
+        self.max_volt = eload_bk8600_consts.MAX_SPECS[self.model_number][1]
+        self.max_pow = eload_bk8600_consts.MAX_SPECS[self.model_number][2]
 
         # Reset to default settings of E-load (constant current).
         self.inst.write("*RST")
