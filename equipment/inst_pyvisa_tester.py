@@ -14,21 +14,30 @@ try:
     while True:
         # Gets available resources (instruments).
         resource_list = rm.list_resources()
+        print(resource_list)
         # Prints the details of all available resources.
         print('\nAvailable Instrument List')
         for index, source in enumerate(resource_list):
-            temp_inst = rm.open_resource(source)
-            print(f'Index: {index}  |  Instrument Details: {temp_inst.query("*IDN?")}')
-
+            inst = rm.open_resource(source)
+            try:
+                print(f'Index: {index}  |  Instrument Details: {inst.query("*IDN?")}')
+            except pyvisa.errors.VisaIOError:
+                # Instrument does not support *IDN? command
+                print(f'Index: {index}  |  Instrument Details: {source}')
         # Select a resource to communicate with, and print its VISA resource name.
         resource_num = int(input('Select Source Index: '))
         print(f'VISA Resource name: {resource_list[resource_num]}')
 
         # Send commands to the chosen resource.
         try:
-            # May need to change the termination character, input doesn't work with '\n' atm.
-            # term_char = input("Termination character (\\n is the default): ")
-            inst = rm.open_resource(resource_list[resource_num])
+            term_char = input("Termination character (\\n is the default): ")
+            # Input termination charactors such as '\n' are saved as '\\n'
+            term_char = term_char[1:]
+            inst = rm.open_resource(
+                resource_list[resource_num],
+                write_termination = '\r',
+                read_termination = '\r'
+            )
             while True:
                 command = input("Command ('X' to change instruments): ")
                 if command != 'X':
