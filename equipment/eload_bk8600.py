@@ -45,18 +45,18 @@ class Bk8600(inst_pyvisa.PyVisaInstrument):
         self.mode = "CURR"
         self.inst.write("FUNC CURR")
 
-    def set_curr(self, current: float) -> None:
+    def set_curr(self, curr: float) -> None:
         """
         Sets the constant current if the e-load is in constant current mode.
 
         Args:
-            current (float): Current value in amps.
+            curr (float): Current value in amps.
         """
         if self.mode == "CURR":
-            if current <= self.max_curr:
-                self.inst.write(f"CURR {current}")
+            if curr <= self.max_curr:
+                self.inst.write(f"CURR {curr}")
             else:
-                print(f"{current} greater than max current {self.max_curr}.")
+                print(f"{curr} greater than max current {self.max_curr}.")
         else:
             print(f"Attempt to change current in incorrect mode ({self.mode}).")
 
@@ -88,18 +88,18 @@ class Bk8600(inst_pyvisa.PyVisaInstrument):
         self.mode = "VOLT"
         self.inst.write("FUNC VOLT")
 
-    def set_volt(self, voltage: float) -> None:
+    def set_volt(self, volt: float) -> None:
         """
         Sets the constant voltage if the e-load is in constant voltage mode.
 
         Args:
-            voltage (float): Voltage level in volts.
+            volt (float): Voltage level in volts.
         """
         if self.mode == "VOLT":
-            if voltage <= self.max_volt:
-                self.inst.write(f"VOLT {voltage}")
+            if volt <= self.max_volt:
+                self.inst.write(f"VOLT {volt}")
             else:
-                print(f"{voltage} greater than max current {self.max_volt}.")
+                print(f"{volt} greater than max current {self.max_volt}.")
         else:
             print(f"Attempt to change voltage in incorrect mode ({self.mode}).")
 

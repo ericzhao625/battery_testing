@@ -76,18 +76,18 @@ class Bk9103(inst_pyvisa.PyVisaInstrument):
         """
         return float(val) / 100
 
-    def set_curr(self, current: float, preset_num: int=3) -> None:
+    def set_curr(self, curr: float, preset_num: int=3) -> None:
         """
         Sets the output current of the PSU.
 
         Args:
-            current (float): Current level in amps.
+            curr (float): Current level in amps.
             preset_num (int): Preset to use (0=A, 1=B, 2=C, 3=Normal).
         """
-        current = round(current, 2)
-        voltage = self.get_volt(preset_num)
-        if current <= self.max_curr and current * voltage <= self.max_pow:
-            self.inst.query(f"CURR{preset_num}{self.float_to_4_dig(current)}")
+        curr = round(curr, 2)
+        volt = self.get_volt(preset_num)
+        if curr <= self.max_curr and curr * volt <= self.max_pow:
+            self.inst.query(f"CURR{preset_num}{self.float_to_4_dig(curr)}")
         else:
             print("Invalid current.")
 
@@ -118,18 +118,18 @@ class Bk9103(inst_pyvisa.PyVisaInstrument):
         self.inst.query("")
         return self.query_to_float(curr)
 
-    def set_volt(self, voltage: float, preset_num: int=3) -> None:
+    def set_volt(self, volt: float, preset_num: int=3) -> None:
         """
         Sets the output voltage of the PSU.
 
         Args:
-            voltage (float): Voltage level in volts.
+            volt (float): Voltage level in volts.
             preset_num (int): Preset to use (0=A, 1=B, 2=C, 3=Normal).
         """
-        voltage = round(voltage, 2)
-        current = self.get_curr(preset_num)
-        if voltage <= self.max_volt and voltage * current <= self.max_pow:
-            self.inst.query(f"VOLT{preset_num}{self.float_to_4_dig(voltage)}")
+        volt = round(volt, 2)
+        curr = self.get_curr(preset_num)
+        if volt <= self.max_volt and volt * curr <= self.max_pow:
+            self.inst.query(f"VOLT{preset_num}{self.float_to_4_dig(volt)}")
         else:
             print("Invalid voltage.")
 
@@ -160,24 +160,24 @@ class Bk9103(inst_pyvisa.PyVisaInstrument):
         self.inst.query("")
         return self.query_to_float(volt)
 
-    def set_curr_volt(self, current: float, voltage: float, preset_num: int=3) -> None:
+    def set_curr_volt(self, curr: float, volt: float, preset_num: int=3) -> None:
         """
         Sets the output voltage and current of the PSU.
 
         Args:
-            current (float): Current level in amps.
-            voltage (float): Voltage level in volts.
+            curr (float): Current level in amps.
+            volt (float): Voltage level in volts.
             preset_num (int): Preset to use (0=A, 1=B, 2=C, 3=Normal).
         """
-        current = round(current, 2)
-        voltage = round(voltage, 2)
+        curr = round(curr, 2)
+        volt = round(volt, 2)
         if (
-            current <= self.max_curr
-            and voltage <= self.max_volt
-            and voltage * current <= self.max_pow
+            curr <= self.max_curr
+            and volt <= self.max_volt
+            and volt * curr <= self.max_pow
         ):
             self.inst.query(
-                f"SETD{preset_num}{self.float_to_4_dig(voltage)}{self.float_to_4_dig(current)}"
+                f"SETD{preset_num}{self.float_to_4_dig(volt)}{self.float_to_4_dig(curr)}"
             )
         else:
             print("Invalid voltage and current combination.")
@@ -190,8 +190,8 @@ class Bk9103(inst_pyvisa.PyVisaInstrument):
             float: Output power value.
         """
         volt = self.measure_volt()
-        current = self.measure_curr()
-        return volt * current
+        curr = self.measure_curr()
+        return volt * curr
 
     def toggle_output(self, state: bool) -> None:
         """
