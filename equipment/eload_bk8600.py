@@ -167,7 +167,7 @@ class Bk8600(inst_pyvisa.PyVisaInstrument):
         else:
             self.inst.write("SYST:LOC")
 
-    def measure_voltage(self) -> float:
+    def measure_volt(self) -> float:
         """
         Performs a "one-shot" measurement of the voltage drop across the e-load.
 
@@ -176,7 +176,7 @@ class Bk8600(inst_pyvisa.PyVisaInstrument):
         """
         return float(self.inst.query("MEAS:VOLT?"))
 
-    def measure_current(self) -> float:
+    def measure_curr(self) -> float:
         """
         Performs a "one-shot" measurement of the current draw by the e-load.
 
