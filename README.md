@@ -27,3 +27,7 @@ E-load BK Precision 8600:
 PSU BK Precision 9103:
   - USB Virtual COM driver: https://l.bkprecision.com/products/power-supplies/9103-320w-multi-range-42v-20a-dc-power-supply.html
   - Uses their own "non-standard" serial protocol, check programming manual for commands: https://bkpmedia.s3.amazonaws.com/downloads/programming_manuals/en-us/9103_9104_series_programming_manual.pdf
+  
+PSU Keysight E3631A:
+  - no extra downloads required
+  - Requires DB9 female connector
