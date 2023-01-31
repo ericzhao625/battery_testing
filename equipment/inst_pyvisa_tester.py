@@ -30,13 +30,15 @@ try:
 
         # Send commands to the chosen resource.
         try:
-            term_char = input("Termination character (\\n is the default): ")
-            # Input termination charactors such as '\n' are saved as '\\n'
-            term_char = term_char[1:]
+            term_char = input("Termination character (n for \\n, r for \\r): ")
+            if term_char == 'r':
+                term_char = '\r'
+            else:
+                term_char = '\n'
             inst = rm.open_resource(
                 resource_list[resource_num],
-                write_termination = '\r',
-                read_termination = '\r'
+                write_termination = term_char,
+                read_termination = term_char
             )
             while True:
                 command = input("Command ('X' to change instruments): ")
