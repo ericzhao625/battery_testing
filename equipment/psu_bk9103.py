@@ -40,9 +40,9 @@ class Bk9103(inst_pyvisa.PyVisaInstrument):
         self.manufacturer = "B&K Precision"
         self.model_number = model_number
 
-        self.max_curr = psu_bk9103_consts.MAX_SPECS[self.model_number][0]
-        self.max_volt = psu_bk9103_consts.MAX_SPECS[self.model_number][1]
-        self.max_pow = psu_bk9103_consts.MAX_SPECS[self.model_number][2]
+        self.max_volt = psu_bk9103_consts.MAX_VOLT[self.model_number]
+        self.max_curr = psu_bk9103_consts.MAX_CURR[self.model_number]
+        self.max_pow = psu_bk9103_consts.MAX_POW[self.model_number]
 
         # Initialize settings of PSU.
         self.toggle_output(False)
@@ -64,7 +64,7 @@ class Bk9103(inst_pyvisa.PyVisaInstrument):
         """
         val = str(int(val * 100))
         while len(val) < 4:
-            val = '0' + val
+            val = "0" + val
         return val
 
     def query_to_float(self, val: str) -> float:

@@ -1,39 +1,36 @@
 """
-Constants related to the RIGOL DL3000 series E-Loads
+Constants related to the RIGOL DL3000 series E-Loads.
 """
 
-# max_volt, max_curr, max_pow
-MAX_SPECS = {
-    'DL3021': {
-        "MAX_VOLT": 150,
-        "MAX_CURR": {
-            "MIN": 4,
-            "MAX": 40,
-        },
-        "MAX_POW": 200,
+MAX_VOLT = {
+    "DL3021": 150,
+    "DL3021A": 150,
+    "DL3031": 150,
+    "DL3031A": 150,
+}
+
+MAX_CURR = {
+    "DL3021": {
+        "MIN": 4,
+        "MAX": 40,
     },
-    'DL3021A': {
-        "MAX_VOLT": 150,
-        "MAX_CURR": {
-            "MIN": 4,
-            "MAX": 40,
-        },
-        "MAX_POW": 200,
+    "DL3021A":{
+        "MIN": 4,
+        "MAX": 40,
     },
-    'DL3031': {
-        "MAX_VOLT": 150,
-        "MAX_CURR": {
-            "MIN": 6,
-            "MAX": 60,
-        },
-        "MAX_POW": 350,
+    "DL3031":{
+        "MIN": 6,
+        "MAX": 60,
     },
-    'DL3031A': {
-        "MAX_VOLT": 150,
-        "MAX_CURR": {
-            "MIN": 6,
-            "MAX": 60,
-        },
-        "MAX_POW": 350,
+    "DL3031A": {
+        "MIN": 6,
+        "MAX": 60,
     },
+}
+
+MAX_POW = {
+    "DL3021": 200,
+    "DL3021A": 200,
+    "DL3031": 350,
+    "DL3031A": 350,
 }

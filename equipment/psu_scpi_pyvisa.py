@@ -7,7 +7,7 @@ from pyvisa.errors import InvalidSession
 
 import inst_pyvisa
 
-class ScpiPsu(inst_pyvisa.PyVisaInstrument):
+class PsuScpi(inst_pyvisa.PyVisaInstrument):
     """
     Class to represent a standard SCPI VISA power supply.
 

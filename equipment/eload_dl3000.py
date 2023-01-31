@@ -3,7 +3,7 @@ Module driver for the RIGOL DL3000 series E-loads.
 """
 
 from eload_scpi_pyvisa import EloadScpi
-import eload_dl3000_consts as inst_consts
+import eload_dl3000_consts as dl3000_consts
 
 class Dl3000(EloadScpi):
     """
@@ -23,8 +23,8 @@ class Dl3000(EloadScpi):
     """
     def __init__(self, visa_name: str) -> None:
         super().__init__(visa_name)
-        self.max_volt = inst_consts.MAX_SPECS[self.model_number]["MAX_VOLT"]
-        self.max_pow = inst_consts.MAX_SPECS[self.model_number]["MAX_POW"]
+        self.max_volt = dl3000_consts.MAX_VOLT[self.model_number]
+        self.max_pow = dl3000_consts.MAX_POW[self.model_number]
         self.set_range("MAX")
 
     def set_range(self, curr_range: str) -> None:
@@ -35,5 +35,5 @@ class Dl3000(EloadScpi):
         Args:
             range (str): "MIN" for low range, "MAX" for high range.
         """
-        self.max_curr = inst_consts.MAX_SPECS[self.model_number]["MAX_CURR"][curr_range]
+        self.max_curr = dl3000_consts.MAX_CURR[self.model_number][curr_range]
         self.inst.write(f"CURR:RANG {curr_range}")

@@ -6,7 +6,7 @@ Commands here: https://www.keysight.com/us/en/assets/9018-01308/user-manuals/901
 import psu_scpi_pyvisa
 import psu_e3631a_consts
 
-class E363xa(psu_scpi_pyvisa.ScpiPsu):
+class E363xa(psu_scpi_pyvisa.PsuScpi):
     """
     Class to represent a KEYSIGHT E3631A series power supply.
 
@@ -39,9 +39,9 @@ class E363xa(psu_scpi_pyvisa.ScpiPsu):
             channel (int): Channel number.
         """
         if channel in psu_e3631a_consts.MAX_SPECS:
-            self.min_volt = psu_e3631a_consts.MAX_SPECS[channel][0]
-            self.max_volt = psu_e3631a_consts.MAX_SPECS[channel][1]
-            self.max_curr = psu_e3631a_consts.MAX_SPECS[channel][2]
+            self.min_volt = psu_e3631a_consts.MIN_VOLT[channel]
+            self.max_volt = psu_e3631a_consts.MAX_VOLT[channel]
+            self.max_curr = psu_e3631a_consts.MAX_CURR[channel]
             self.inst.write(f"INST:NSEL {channel}")
         else:
             print("Invalid channel.")

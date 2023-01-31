@@ -16,25 +16,25 @@ try:
         resource_list = rm.list_resources()
         print(resource_list)
         # Prints the details of all available resources.
-        print('\nAvailable Instrument List')
+        print("\nAvailable Instrument List")
         for index, source in enumerate(resource_list):
             inst = rm.open_resource(source)
             try:
-                print(f'Index: {index}  |  Instrument Details: {inst.query("*IDN?")}')
+                print(f"Index: {index}  |  Instrument Details: {inst.query('*IDN?')}")
             except pyvisa.errors.VisaIOError:
                 # Instrument does not support *IDN? command
-                print(f'Index: {index}  |  Instrument Details: {source}')
+                print(f"Index: {index}  |  Instrument Details: {source}")
         # Select a resource to communicate with, and print its VISA resource name.
-        resource_num = int(input('Select Source Index: '))
-        print(f'VISA Resource name: {resource_list[resource_num]}')
+        resource_num = int(input("Select Source Index: "))
+        print(f"VISA Resource name: {resource_list[resource_num]}")
 
         # Send commands to the chosen resource.
         try:
             term_char = input("Termination character (n for \\n, r for \\r): ")
-            if term_char == 'r':
-                term_char = '\r'
+            if term_char == "r":
+                term_char = "\r"
             else:
-                term_char = '\n'
+                term_char = "\n"
             inst = rm.open_resource(
                 resource_list[resource_num],
                 write_termination = term_char,
@@ -42,7 +42,7 @@ try:
             )
             while True:
                 command = input("Command ('X' to change instruments): ")
-                if command != 'X':
+                if command != "X":
                     try:
                         # Try querying (Write command followed by a Read command).
                         print(inst.query(command))
@@ -53,7 +53,7 @@ try:
                 else:
                     break
         except IndexError:
-            print('Invalid index.\n')
+            print("Invalid index.\n")
 
 except KeyboardInterrupt:
     print("\nQuit.")
