@@ -20,9 +20,9 @@ class PyVisaInstrument:
         rm = pyvisa.ResourceManager()
         self.inst = rm.open_resource(visa_name)
         try:
-            idn = self.inst.query('*IDN?').split(', ')
-            self.manufacturer = idn[0]
-            self.model_number = idn[1]
+            idn = self.inst.query('*IDN?').split(',')
+            self.manufacturer = idn[0].lstrip(' ')
+            self.model_number = idn[1].lstrip(' ')
             print(f"Connected to {idn[0]} {idn[1]}.")
         except pyvisa.errors.VisaIOError:
             print(f"Connected to {visa_name}.")
