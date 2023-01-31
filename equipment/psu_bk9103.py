@@ -1,5 +1,5 @@
 """
-Module driver for a BK PRECISION 9103/9104 series E-load.
+Module driver for a BK PRECISION 9103/9104 series power supply.
 Note that this PSU uses "non-standard" serial commands.
 
 There are some commands where the return value is two messages.
@@ -16,7 +16,7 @@ import psu_bk9103_consts
 
 class Bk9103(inst_pyvisa.PyVisaInstrument):
     """
-    Class to represent a BK Precision 86XX series E-load.
+    Class to represent a BK PRECISION 9103/9104 series power supply.
 
     Args:
         visa_name (str): VISA resource name of the instrument.
@@ -99,7 +99,7 @@ class Bk9103(inst_pyvisa.PyVisaInstrument):
             preset_num (int): Preset to use (0=A, 1=B, 2=C, 3=Normal).
 
         Returns:
-            float: Set current value.
+            float: Set current value in amps.
         """
         curr = self.inst.query(f"GETS{preset_num}")[4:8]
         # Clear output buffer
@@ -111,7 +111,7 @@ class Bk9103(inst_pyvisa.PyVisaInstrument):
         Measures the output current of the PSU.
 
         Returns:
-            float: Displayed current value.
+            float: Displayed current value in amps.
         """
         curr = self.inst.query("GETD")[4:8]
         # Clear output buffer
@@ -141,7 +141,7 @@ class Bk9103(inst_pyvisa.PyVisaInstrument):
             preset_num (int): Preset to use (0=A, 1=B, 2=C, 3=Normal).
 
         Returns:
-            float: Set voltage value.
+            float: Set voltage value in volts.
         """
         volt = self.inst.query(f"GETS{preset_num}")[0:4]
         # Clear output buffer
@@ -153,7 +153,7 @@ class Bk9103(inst_pyvisa.PyVisaInstrument):
         Measures the output voltage of the PSU.
 
         Returns:
-            float: Displayed voltage value.
+            float: Displayed voltage value in volts.
         """
         volt = self.inst.query("GETD")[0:4]
         # Clear output buffer
@@ -189,9 +189,7 @@ class Bk9103(inst_pyvisa.PyVisaInstrument):
         Returns:
             float: Output power value.
         """
-        volt = self.measure_volt()
-        curr = self.measure_curr()
-        return volt * curr
+        return self.measure_volt() * self.measure_curr()
 
     def toggle_output(self, state: bool) -> None:
         """
@@ -217,7 +215,7 @@ class Bk9103(inst_pyvisa.PyVisaInstrument):
     def disable_front_panel(self, state) -> None:
         """
         Toggles access to the front panel keys.
-        Remote disables all keys except for the "LOCK" key which enables access.
+        Disables all keys except for the "LOCK" key which enables access.
 
         Args:
             state (bool): True for locked, False for unlocked.
