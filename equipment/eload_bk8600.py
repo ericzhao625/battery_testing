@@ -2,10 +2,10 @@
 Module driver for a BK PRECISION 86XX series E-load.
 """
 
-import eload_scpi_pyvisa
-import eload_bk8600_consts
+from eload_scpi_pyvisa import EloadScpi
+import eload_bk8600_consts as bk8600_consts
 
-class Bk8600(eload_scpi_pyvisa.EloadScpi):
+class Bk8600(EloadScpi):
     """
     Class to represent a BK Precision 86XX series E-load.
 
@@ -24,9 +24,9 @@ class Bk8600(eload_scpi_pyvisa.EloadScpi):
     def __init__(self, visa_name: str) -> None:
         super().__init__(visa_name)
         # Set safety limits based on model number.
-        self.max_volt = eload_bk8600_consts.MAX_VOLT[self.model_number]
-        self.max_curr = eload_bk8600_consts.MAX_CURR[self.model_number]        
-        self.max_pow = eload_bk8600_consts.MAX_POW[self.model_number]
+        self.max_volt = bk8600_consts.MAX_VOLT[self.model_number]
+        self.max_curr = bk8600_consts.MAX_CURR[self.model_number]        
+        self.max_pow = bk8600_consts.MAX_POW[self.model_number]
 
     def toggle_remote_sense(self, state) -> None:
         """

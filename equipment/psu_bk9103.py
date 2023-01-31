@@ -11,10 +11,10 @@ clears/saves the message buffer.
 
 from pyvisa.errors import InvalidSession
 
-import inst_pyvisa
-import psu_bk9103_consts
+from inst_pyvisa import PyVisaInstrument
+import psu_bk9103_consts as bk9103_consts
 
-class Bk9103(inst_pyvisa.PyVisaInstrument):
+class Bk9103(PyVisaInstrument):
     """
     Class to represent a BK PRECISION 9103/9104 series power supply.
 
@@ -32,17 +32,17 @@ class Bk9103(inst_pyvisa.PyVisaInstrument):
     """
     def __init__(self, visa_name: str, model_number: str) -> None:
         super().__init__(visa_name)
-        self.inst.baud_rate = psu_bk9103_consts.BAUD_RATE
-        self.inst.read_termination = psu_bk9103_consts.READ_TERMINATION
-        self.inst.write_termination = psu_bk9103_consts.WRITE_TERMINATION
+        self.inst.baud_rate = bk9103_consts.BAUD_RATE
+        self.inst.read_termination = bk9103_consts.READ_TERMINATION
+        self.inst.write_termination = bk9103_consts.WRITE_TERMINATION
 
         # Manually setting these specifications as there is no *IDN? command.
         self.manufacturer = "B&K Precision"
         self.model_number = model_number
 
-        self.max_volt = psu_bk9103_consts.MAX_VOLT[self.model_number]
-        self.max_curr = psu_bk9103_consts.MAX_CURR[self.model_number]
-        self.max_pow = psu_bk9103_consts.MAX_POW[self.model_number]
+        self.max_volt = bk9103_consts.MAX_VOLT[self.model_number]
+        self.max_curr = bk9103_consts.MAX_CURR[self.model_number]
+        self.max_pow = bk9103_consts.MAX_POW[self.model_number]
 
         # Initialize settings of PSU.
         self.toggle_output(False)

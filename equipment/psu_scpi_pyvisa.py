@@ -5,9 +5,9 @@ Implements all the standard SCPI commands for PSU control.
 
 from pyvisa.errors import InvalidSession
 
-import inst_pyvisa
+from inst_pyvisa import PyVisaInstrument
 
-class PsuScpi(inst_pyvisa.PyVisaInstrument):
+class PsuScpi(PyVisaInstrument):
     """
     Class to represent a standard SCPI VISA power supply.
 

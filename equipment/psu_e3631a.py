@@ -3,10 +3,10 @@ Module driver for a KEYSIGHT E3631A series power supply.
 Commands here: https://www.keysight.com/us/en/assets/9018-01308/user-manuals/9018-01308.pdf
 """
 
-import psu_scpi_pyvisa
-import psu_e3631a_consts
+from psu_scpi_pyvisa import PsuScpi
+import psu_e3631a_consts as e3631a_consts
 
-class E363xa(psu_scpi_pyvisa.PsuScpi):
+class E363xa(PsuScpi):
     """
     Class to represent a KEYSIGHT E3631A series power supply.
 
@@ -25,7 +25,7 @@ class E363xa(psu_scpi_pyvisa.PsuScpi):
     def __init__(self, visa_name: str) -> None:
         self.min_volt = 0
         super().__init__(visa_name)
-        self.inst.baud_rate = psu_e3631a_consts.BAUD_RATE
+        self.inst.baud_rate = e3631a_consts.BAUD_RATE
         self.set_channel(2)
 
     def set_channel(self, channel: int) -> None:
@@ -38,10 +38,10 @@ class E363xa(psu_scpi_pyvisa.PsuScpi):
         Args:
             channel (int): Channel number.
         """
-        if channel in psu_e3631a_consts.MAX_SPECS:
-            self.min_volt = psu_e3631a_consts.MIN_VOLT[channel]
-            self.max_volt = psu_e3631a_consts.MAX_VOLT[channel]
-            self.max_curr = psu_e3631a_consts.MAX_CURR[channel]
+        if channel in e3631a_consts.MAX_VOLT:
+            self.min_volt = e3631a_consts.MIN_VOLT[channel]
+            self.max_volt = e3631a_consts.MAX_VOLT[channel]
+            self.max_curr = e3631a_consts.MAX_CURR[channel]
             self.inst.write(f"INST:NSEL {channel}")
         else:
             print("Invalid channel.")
