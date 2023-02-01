@@ -31,3 +31,6 @@ PSU BK Precision 9103:
 PSU Keysight E3631A:
   - no extra downloads required
   - Requires DB9 female connector
+
+E-Load Keysight DL3000:
+  - no extra downloads required
