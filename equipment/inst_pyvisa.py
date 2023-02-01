@@ -26,3 +26,9 @@ class PyVisaInstrument:
             print(f"Connected to {idn[0]} {idn[1]}.")
         except pyvisa.errors.VisaIOError:
             print(f"Connected to {visa_name}.")
+
+    def __del__(self):
+        try:
+            self.inst.close()
+        except AttributeError:
+            pass
